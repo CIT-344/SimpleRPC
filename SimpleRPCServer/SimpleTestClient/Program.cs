@@ -1,9 +1,8 @@
-﻿using RPCClient;
-using RPCServer;
+﻿using RPCServer;
 using System;
 using System.Net;
 
-namespace SimpleTestClient
+namespace ServerClient
 {
     class Program
     {
@@ -11,16 +10,22 @@ namespace SimpleTestClient
         {
             Console.WriteLine("Starting Server");
             SimpleRPCServer _Server = new SimpleRPCServer(IPAddress.Any, 11000);
+
+
+            _Server.On<String>("SysTime", (serverTime) =>
+            {
+                _Server.All("SysTime", DateTime.Now);
+            });
+
+            _Server.On<String>("OutMsg", (msg) =>
+            {
+                _Server.All("InMsg", msg);
+            });
+
+
             _Server.StartServer();
 
-
-            SimpleRPCClient _Client = new SimpleRPCClient(IPAddress.Loopback.ToString(), 11000);
-            Console.WriteLine("Enter Text to end to Server:");
-            var text = Console.ReadLine();
-            _Client.Send(text);
-
-            _Server.SoftStopServer();
-
+            Console.WriteLine("Press any key to exit");
             Console.ReadKey();
 
         }

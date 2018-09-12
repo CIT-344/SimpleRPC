@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleRPCClient\SimpleRPCClient.csproj" />
     <ProjectReference Include="..\SimpleRPCServer\SimpleRPCServer.csproj" />
   </ItemGroup>
 
